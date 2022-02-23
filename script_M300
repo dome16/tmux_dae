@@ -1,0 +1,26 @@
+#!/bin/bash
+#############################################################
+#                                                           #
+# Script für das starten  von Tmux mit ssh auf lf1 und ls3  #
+#                                                           #
+#############################################################
+
+# Variablen
+session="dome_gibb"
+
+# Tmux starten
+tmux start-server
+
+# Neue Session
+tmux new-session -d -s $session
+
+# Pane Horizonral spliten und ssh auf ls3 verbinden
+tmux splitw -h
+tmux send-keys "ssh vmadmin@192.168.220.13" C-m
+
+# Pane Vertikal spliten und ssh auf lf1 verbinden
+tmux splitw -v
+tmux send-keys "ssh -p 222 root@192.168.210.1" C-m
+
+# Mit Session Verbinden
+tmux attach-session -t $session
